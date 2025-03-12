@@ -21,17 +21,6 @@
     @endif
 
 
-    <!-- TOUS LES PRODUITS PAR CATEGORIES ??? -->
-    <ul>
-        @foreach ($products as $product)
-            <li>
-                <a href="{{ route('products.show', $product->slug) }}">
-                    {{ $product->name }} - {{ $product->price }} €
-                </a>
-            </li>
-        @endforeach
-    </ul>
-
     <!-- Pagination -->
     {{ $products->links() }}
 @endsection
