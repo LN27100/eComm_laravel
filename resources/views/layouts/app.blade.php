@@ -11,6 +11,9 @@
         <ul>
             <li><a href="/">Accueil</a></li>
             @yield('nav-links')
+            <!-- Liens corrects pour l'administration -->
+            <li><a href="{{ route('categories.index') }}">Admin Catégories</a></li>
+            <li><a href="{{ route('products.index') }}">Admin Produits</a></li>
         </ul>
     </nav>
 
