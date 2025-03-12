@@ -20,7 +20,19 @@
         </ul>
     @endif
 
+    @if ($products->isNotEmpty())
+        <h2>Produits</h2>
+        <ul>
+            @foreach ($products as $product)
+                <li><a href="{{ url('/products/' . $product->slug) }}">{{ $product->name }}</a></li>
+            @endforeach
+        </ul>
+    @else
+        <p>Aucun produit trouvé dans cette catégorie.</p>
+    @endif
 
     <!-- Pagination -->
-    {{ $products->links() }}
+    <div class="">
+        {{ $products->links() }}
+    </div>
 @endsection

@@ -11,7 +11,7 @@ class CategoryController extends Controller
     $category = Category::where('slug', $slug)->firstOrFail();
 
     $breadcrumbs = $category->ancestors()->pluck('name')->push($category->name);
-    $products = $category->allProducts()->where('active', true)->paginate(10);
+    $products = $category->allProducts()->paginate(7);
 
     return view('categories.show', compact('category', 'products', 'breadcrumbs'));
 }
