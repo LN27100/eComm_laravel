@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,31 +24,36 @@ class AdminProductController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'active' => 'nullable|boolean',
-            'slug' => 'required|unique:products,slug',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+{
+    // Validation des champs
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'price' => 'required|numeric',
+        'active' => 'nullable|boolean', 
+        'slug' => 'required|unique:products,slug',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        $data = $request->only(['name', 'description', 'price', 'slug']);
-        $data['active'] = $request->has('active');
-        $product = Product::create($data);
+    $data = $request->only(['name', 'description', 'price', 'slug']);
+    $data['active'] = $request->has('active') ? 1 : 0;
 
-        if ($request->has('categories')) {
-            $product->categories()->sync($request->categories);
-        }
+    // Création du produit
+    $product = Product::create($data);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images', 'public');
-            $product->images()->create(['url' => $path]);
-        }
-
-        return redirect()->route('products.index')->with('success', 'Produit créé avec succès');
+    // Traitement des catégories associées
+    if ($request->has('categories') && is_array($request->categories)) {
+        $product->categories()->sync($request->categories);
     }
+
+    // Traitement de l'image
+    if ($request->hasFile('image')) {
+        $path = $request->file('image')->store('images', 'public');
+        $product->images()->save(new Image(['url' => $path]));
+    }
+
+    return redirect()->route('products.index')->with('success', 'Produit créé avec succès');
+}
 
     public function edit(Product $product)
     {
