@@ -15,7 +15,7 @@ class ProductController extends Controller
         // Produits actifs et les catégories
         $products = Product::where('active', true)->inRandomOrder()->limit(5)->get();
         $categories = Category::whereNull('parent_id')->get();
-    
+
         return view('products.index', compact('products', 'categories'));
     }
 
@@ -23,12 +23,17 @@ class ProductController extends Controller
     {
         // Récupérer le produit par slug et image
         $product = Product::where('slug', $slug)->with('images')->firstOrFail();
-    
+
+        // Erreur si produit inactif
+        if (!$product || !$product->active) {
+            abort(404);
+        }
+
         //  produits similaires
         $similarProducts = Product::whereHas('categories', function ($query) use ($product) {
             $query->whereIn('id', $product->categories->pluck('id'));
         })->where('id', '!=', $product->id)->inRandomOrder()->limit(5)->get();
-    
+
         return view('products.show', compact('product', 'similarProducts'));
     }
 
@@ -47,7 +52,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'active' => 'nullable|boolean',
             'slug' => 'required|unique:products,slug',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Créer le produit

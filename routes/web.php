@@ -5,6 +5,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Auth\LoginController;
+
 
 // Routes publiques
 Route::get('/', [ProductController::class, 'index']);
@@ -14,7 +16,7 @@ Route::get('/products/{slug}', [ProductController::class, 'show'])->name('produc
 
 
 // Routes d'administration
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
     // Catégories
     Route::get('/categories', [AdminCategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/create', [AdminCategoryController::class, 'create'])->name('categories.create');
@@ -31,3 +33,9 @@ Route::prefix('admin')->group(function () {
     Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
 });
+
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login')->middleware('guest');
+
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
