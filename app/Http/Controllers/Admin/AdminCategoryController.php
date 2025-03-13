@@ -55,6 +55,6 @@ class AdminCategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('admin.categories.index')->with('success', 'Catégorie supprimée avec succès');
+        return redirect()->route('categories.index')->with('success', 'Catégorie supprimée avec succès');
     }
 }

@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <h1>{{ $category->name }}</h1>
+   
 
     @if ($category->children->isNotEmpty())
         <h2>Sous-catégories</h2>

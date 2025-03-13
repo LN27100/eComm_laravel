@@ -4,17 +4,21 @@
 
 @section('content')
     <h1>Liste des produits</h1>
-    <a href="{{ route('admin.products.create') }}">Créer un produit</a>
+    <a href="{{ route('products.create') }}" class="create-button">Créer un produit</a>
     <ul>
         @foreach ($products as $product)
             <li>
-                {{ $product->name }}
-                <a href="{{ route('admin.products.edit', $product) }}">Modifier</a>
-                <form action="{{ route('admin.products.destroy', $product) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Supprimer</button>
-                </form>
+                <span class="item-name">{{ $product->name }}</span>
+                <div class="actions">
+                    <form action="{{ route('products.edit', $product) }}" method="GET" style="display:inline;">
+                        <button type="submit" class="edit-button">Modifier</button>
+                    </form>
+                    <form action="{{ route('products.destroy', $product) }}" method="POST" class="delete-form" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="delete-button">Supprimer</button>
+                    </form>
+                </div>
             </li>
         @endforeach
     </ul>

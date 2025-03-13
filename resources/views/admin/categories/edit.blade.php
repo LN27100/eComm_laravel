@@ -4,7 +4,7 @@
 
 @section('content')
     <h1>Modifier une catégorie</h1>
-    <form action="{{ route('admin.categories.update', $category) }}" method="POST">
+    <form action="{{ route('categories.update', $category) }}" method="POST">
         @csrf
         @method('PUT')
         <label for="name">Nom</label>

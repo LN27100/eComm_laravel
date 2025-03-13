@@ -8,10 +8,11 @@
 </head>
 <body>
     <nav>
-        <ul>
+        <ul class="nav-links">
             <li><a href="/">Accueil</a></li>
             @yield('nav-links')
-            <!-- Liens corrects pour l'administration -->
+        </ul>
+        <ul class="admin-links">
             <li><a href="{{ route('categories.index') }}">Admin Catégories</a></li>
             <li><a href="{{ route('products.index') }}">Admin Produits</a></li>
         </ul>

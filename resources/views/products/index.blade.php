@@ -3,7 +3,7 @@
 @section('title', 'Liste des produits')
 
 @section('nav-links')
-    @foreach ($categories as $category)
+@foreach ($categories as $category)
         <li><a href="{{ url('/categories/' . $category->slug) }}">{{ $category->name }}</a></li>
     @endforeach
 @endsection

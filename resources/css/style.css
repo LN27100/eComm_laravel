@@ -1,8 +1,8 @@
-@import 'bootstrap/dist/css/bootstrap.min.css'; 
+@import 'bootstrap/dist/css/bootstrap.min.css';
 
 body {
     font-family: 'Saiyan Sans', Arial, sans-serif;
-    background-color: #1c1c1c; 
+    background-color: #1c1c1c;
     color: aquamarine;
     margin: 0;
     padding: 0;
@@ -11,24 +11,52 @@ body {
 
 /* Navbar */
 nav {
-    background-color: #0056b3; 
-    padding: 10px;
-    text-align: center;
+    background-color: #0056b3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
 }
 
-nav ul {
+nav .nav-links {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     justify-content: center;
+    flex-grow: 1;
 }
 
-nav ul li {
-    margin: 0 10px;
+nav .nav-links li {
+    margin: 0 5px;
 }
 
-nav ul li a {
+nav .nav-links li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+nav .nav-links li a:hover {
+    color: #00aaff;
+    text-shadow: 0 0 5px #00aaff;
+}
+
+nav .admin-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+nav .admin-links li {
+    margin-left: 20px;
+}
+
+nav .admin-links li a {
     text-decoration: none;
     font-weight: bold;
     color: #fff;
@@ -36,7 +64,7 @@ nav ul li a {
     font-size: 18px;
 }
 
-nav ul li a:hover {
+nav .admin-links li a:hover {
     color: #00aaff;
     text-shadow: 0 0 5px #00aaff;
 }
@@ -45,7 +73,7 @@ nav ul li a:hover {
 h1 {
     text-align: center;
     margin: 20px 0;
-    color: #ffd700; 
+    color: #ffd700;
     text-transform: uppercase;
     font-size: 36px;
     font-weight: bold;
@@ -78,7 +106,8 @@ ul li a {
     font-size: 20px;
     font-weight: bold;
     color: #06325b;
-    text-shadow: 0 0 5px #124f6d;}
+    text-shadow: 0 0 5px #124f6d;
+}
 
 ul li a:hover {
     color: #fff;
@@ -119,4 +148,112 @@ ul li::before {
 .pagination-container ul li a:hover {
     color: #fff;
     text-shadow: 0px 0px 10px #fff;
+}
+
+/* bouton Créer */
+.create-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.create-button:hover {
+    background-color: #218838;
+}
+
+/* bouton Modifier */
+.edit-button {
+    background-color: #0c6212;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
+
+/* bouton Supprimer */
+.delete-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+/* Formulaire de création */
+.create-form {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #2d2d2d;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+    color: #fff;
+}
+
+/* Formulaire */
+.create-form label {
+    font-weight: bold;
+    margin-top: 15px;
+    display: block;
+    color: #ffd700;
+    text-transform: uppercase;
+}
+
+.create-form .form-input, .create-form .form-select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 2px solid #06325b;
+    background-color: #5c5a5a;
+    color: #fff;
+}
+
+.create-form .form-input:focus, .create-form .form-select:focus {
+    border-color: #00aaff;
+    box-shadow: 0 0 5px #00aaff;
+}
+
+.create-form .form-checkbox {
+    margin-top: 10px;
+}
+
+.submit-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #218838;
 }

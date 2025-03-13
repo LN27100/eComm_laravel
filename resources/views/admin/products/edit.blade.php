@@ -4,7 +4,7 @@
 
 @section('content')
     <h1>Modifier un produit</h1>
-    <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('products.update', $product) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <label for="name">Nom</label>
