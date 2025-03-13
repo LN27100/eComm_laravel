@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminProductController extends Controller
 {
@@ -32,7 +33,9 @@ class AdminProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $product = Product::create($request->only(['name', 'description', 'price', 'active', 'slug']));
+        $data = $request->only(['name', 'description', 'price', 'slug']);
+        $data['active'] = $request->has('active');
+        $product = Product::create($data);
 
         if ($request->has('categories')) {
             $product->categories()->sync($request->categories);
@@ -40,12 +43,10 @@ class AdminProductController extends Controller
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('images', 'public');
-            $product->images()->create([
-                'url' => $path,
-            ]);
+            $product->images()->create(['url' => $path]);
         }
 
-        return redirect()->route('admin.products.index')->with('success', 'Produit créé avec succès');
+        return redirect()->route('products.index')->with('success', 'Produit créé avec succès');
     }
 
     public function edit(Product $product)
@@ -60,30 +61,38 @@ class AdminProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric',
-            'active' => 'nullable|boolean',
             'slug' => 'required|unique:products,slug,' . $product->id,
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $product->update($request->only(['name', 'description', 'price', 'active', 'slug']));
+        $data = $request->only(['name', 'description', 'price', 'slug']);
+        $data['active'] = $request->has('active');
+        $product->update($data);
 
         if ($request->has('categories')) {
             $product->categories()->sync($request->categories);
         }
 
         if ($request->hasFile('image')) {
+            if ($product->images()->exists()) {
+                Storage::disk('public')->delete($product->images->first()->url);
+                $product->images()->delete();
+            }
             $path = $request->file('image')->store('images', 'public');
-            $product->images()->create([
-                'url' => $path,
-            ]);
+            $product->images()->create(['url' => $path]);
         }
 
-        return redirect()->route('admin.products.index')->with('success', 'Produit mis à jour avec succès');
+        return redirect()->route('products.index')->with('success', 'Produit mis à jour avec succès');
     }
 
     public function destroy(Product $product)
     {
+        if ($product->images()->exists()) {
+            Storage::disk('public')->delete($product->images->first()->url);
+            $product->images()->delete();
+        }
         $product->delete();
+
         return redirect()->route('products.index')->with('success', 'Produit supprimé avec succès');
     }
 }

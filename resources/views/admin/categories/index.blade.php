@@ -5,6 +5,11 @@
 @section('content')
     <h1>Liste des catégories</h1>
     <a href="{{ route('categories.create') }}" class="create-button">Créer une catégorie</a>
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <ul>
         @foreach ($categories as $category)
             <li>
@@ -16,7 +21,7 @@
                     <form action="{{ route('categories.destroy', $category) }}" method="POST" class="delete-form" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="delete-button">Supprimer</button>
+                        <button type="submit" class="delete-button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')">Supprimer</button>
                     </form>
                 </div>
             </li>

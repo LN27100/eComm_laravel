@@ -9,8 +9,9 @@ use App\Http\Controllers\Admin\AdminProductController;
 // Routes publiques
 Route::get('/', [ProductController::class, 'index']);
 Route::get('/categories/{slug}', [CategoryController::class, 'show']);
-Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+
 
 // Routes d'administration
 Route::prefix('admin')->group(function () {

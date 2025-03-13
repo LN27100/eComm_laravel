@@ -16,8 +16,10 @@ class AdminCategoryController extends Controller
 
     public function create()
     {
-        return view('admin.categories.create');
+        $categories = Category::all();
+        return view('admin.categories.create', compact('categories'));
     }
+    
 
     public function store(Request $request)
     {
@@ -34,9 +36,11 @@ class AdminCategoryController extends Controller
     }
 
     public function edit(Category $category)
-    {
-        return view('admin.categories.edit', compact('category'));
-    }
+{
+    $categories = Category::all();
+    return view('admin.categories.edit', compact('category', 'categories'));
+}
+
 
     public function update(Request $request, Category $category)
     {
@@ -49,12 +53,17 @@ class AdminCategoryController extends Controller
 
         $category->update($request->all());
 
-        return redirect()->route('admin.categories.index')->with('success', 'Catégorie mise à jour avec succès');
+        return redirect()->route('categories.index')->with('success', 'Catégorie mise à jour avec succès');
     }
 
     public function destroy(Category $category)
-    {
-        $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Catégorie supprimée avec succès');
+{
+    if ($category->children->isNotEmpty() || $category->products->isNotEmpty()) {
+        return redirect()->route('categories.index')->with('error', 'La catégorie contient des sous-catégories ou des produits et ne peut pas être supprimée.');
     }
+
+    $category->delete();
+    return redirect()->route('categories.index')->with('success', 'Catégorie supprimée avec succès');
+}
+
 }
