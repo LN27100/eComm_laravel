@@ -258,7 +258,7 @@ ul li::before {
     background-color: #218838;
 }
 
-/* ======= Page de Connexion ======= */
+/* Page de Connexion */
 .login-container {
     max-width: 400px;
     margin: 50px auto;
@@ -324,4 +324,28 @@ ul li::before {
     color: #dc3545;
     font-weight: bold;
     margin-top: 10px;
+}
+
+/* Bouton de Déconnexion */
+.logout-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
+    border: none;
+    font-size: 14px;
+}
+
+.logout-button:hover {
+    background-color: #ffd700; 
+    color: black;
+}
+
+.logout-container {
+    display: flex;
+    align-items: center;
 }

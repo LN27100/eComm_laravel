@@ -6,6 +6,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
+
 
 
 // Routes publiques
@@ -39,3 +41,4 @@ Route::get('/login', function () {
 })->name('login')->middleware('guest');
 
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
+Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');

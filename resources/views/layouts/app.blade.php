@@ -7,16 +7,26 @@
     @vite('resources/css/style.css')
 </head>
 <body>
-    <nav>
-        <ul class="nav-links">
-            <li><a href="/">Accueil</a></li>
-            @yield('nav-links')
-        </ul>
-        <ul class="admin-links">
-            <li><a href="{{ route('categories.index') }}">Admin Catégories</a></li>
-            <li><a href="{{ route('products.index') }}">Admin Produits</a></li>
-        </ul>
-    </nav>
+<nav>
+    <ul class="nav-links">
+        <li><a href="/">Accueil</a></li>
+        @yield('nav-links')
+    </ul>
+    <ul class="admin-links">
+        <li><a href="{{ route('categories.index') }}">Admin Catégories</a></li>
+        <li><a href="{{ route('products.index') }}">Admin Produits</a></li>
+    </ul>
+    @auth
+        <div class="logout-container">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="logout-button">Déconnexion</button>
+            </form>
+        </div>
+    @endauth
+</nav>
+
+
 
     <div class="container">
         @yield('content')
